@@ -1,0 +1,15 @@
+{% extends 'learn/base.html' %}
+
+{% block content %}
+
+    {% include 'learn/list.html' with list_title='Learn' %}
+
+{% endblock %}
+
+{% block content_2 %}
+<ul class="nav navbar-nav">
+        <li>
+            <a href="{% url 'learn:resources' %}">All Records</a>
+        </li>
+    </ul>
+{% endblock %}

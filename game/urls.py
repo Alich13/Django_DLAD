@@ -17,15 +17,15 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
-from quiz import views
-from django.contrib.auth.views import LoginView ,LogoutView
+from learn import views
+
 
 urlpatterns = [
     url(r'^$', views.index),
-    url(r'login/', LoginView.as_view(), name='login'),
-    url(r'login/', LoginView.as_view(), name='logout'),
-    url(r'^home/$', views.home , name="home"),
-    url(r'^quiz/', include('quiz.urls', namespace="quiz")), #les path de quiz/url.py préfixée par quiz/
+    url(r'register', views.register_request, name="register"),
+    url(r'login/', views.login_request, name='login'),
+    url(r"logout", views.logout_request, name="logout"),
+    url(r'^learn/', include('learn.urls', namespace="learn")), #les path de quiz/url.py préfixée par quiz/
     url(r'^admin/', admin.site.urls),
 
 ]
