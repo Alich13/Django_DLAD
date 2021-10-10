@@ -6,7 +6,7 @@
 <hr class="detail-separator">
 
 <div class="col-md-6">
-  {% with "quiz/img/items/"|add:image.name|add:".jpg" as image_url %}
+  {% with "learn/img/items/"|add:image.name|add:".jpg" as image_url %}
   <img src="{% static image_url %}" alt="{{ image.name }}" class="img-responsive">
   {% endwith %}
 </div>

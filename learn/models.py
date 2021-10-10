@@ -24,3 +24,5 @@ class Question(models.Model):
 class Answer_list (models.Model):
     description= models.TextField()
     question_id = models.ForeignKey(Question, on_delete=models.CASCADE)
+
+# add playes

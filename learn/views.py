@@ -4,7 +4,7 @@ from django.db.models import Q
 from django.contrib.auth.forms import AuthenticationForm
 from .models import *
 from .forms import NewUserForm
-from django.contrib.auth import login, authenticate , logout
+from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 
 
@@ -31,7 +31,7 @@ def login_request(request):
             if user is not None:
                 login(request, user)
                 messages.info(request, f"You are now logged in as {username}.")
-                return redirect("learn:resources")
+                return redirect("home")
             else:
                 messages.error(request, "Invalid username or password.")
         else:
@@ -39,11 +39,11 @@ def login_request(request):
     form = AuthenticationForm()
     return render(request=request, template_name="registration/login.html", context={"login_form": form})
 
-def logout_request(request):
-	logout(request)
-	messages.info(request, "You have successfully logged out.")
-	return redirect("login")
 
+def logout_request(request):
+    logout(request)
+    messages.info(request, "You have successfully logged out.")
+    return redirect("login")
 
 
 def My_paginetor(request, items, nb_items_in_page):
@@ -61,6 +61,11 @@ def My_paginetor(request, items, nb_items_in_page):
 def index(request):
     return render(request=request,
                   template_name='learn/index.html')
+
+
+def home(request):
+    return render(request=request,
+                  template_name='learn/home.html')
 
 
 # @login_required(login_url='/')

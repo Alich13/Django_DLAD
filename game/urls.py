@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'register', views.register_request, name="register"),
     url(r'login/', views.login_request, name='login'),
     url(r"logout", views.logout_request, name="logout"),
+    url(r'home/', views.home, name="home"),
     url(r'^learn/', include('learn.urls', namespace="learn")), #les path de quiz/url.py préfixée par quiz/
     url(r'^admin/', admin.site.urls),
 
