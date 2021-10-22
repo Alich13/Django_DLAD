@@ -1,6 +1,6 @@
 import csv
 from django.core.management.base import BaseCommand, CommandError
-from learn.models import Images
+from learn.models import Question
 
 class Command(BaseCommand):
 
@@ -12,17 +12,17 @@ class Command(BaseCommand):
             dataReader = csv.reader(open(csv_file), delimiter=',', quotechar='"')
             header = next(dataReader)
             for row in dataReader:
-                print(row[0], row[1],row[7])
-                Images.objects.create(
+
+                Question.objects.create(
                     pk = row[0],
-                    name = row[1],
-                    description = row[2],
-                    microscopy = row[3],
-                    cell_type = row[4],
-                    component = row[5],
-                    doi = row[6],
-                    organism = row[7]
+                    question=row[1],
+                    type = row[2],
+                    imagefield =row[3],
+                    points = row[4],
+                    nb_answers = row[6],
+                    nb_images = row[5],
+
                 )
                 self.stdout.write(
-                    'Created employee {} {}'.format(Images.name, Images.doi)
+                    'Created question {} {}'.format(Question.type, Question.question)
                 )

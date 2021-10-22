@@ -15,14 +15,16 @@ class Images(models.Model):
 class Question(models.Model):
     question= models.TextField()
     type = models.CharField(max_length=200)
+    imagefield = models.CharField(max_length=200,null=True)
     points= models.IntegerField(null=False)
     nb_images = models.IntegerField(null=False) # the number of images to be displayed
-    #nb_answers
-    images = models.ManyToManyField(Images, related_name='question', blank=True)
+    nb_answers = models.IntegerField(null=False)
+    #images = models.ManyToManyField(Images, related_name='question', blank=True)
 
 
 class Answer_list (models.Model):
-    description= models.TextField()
-    question_id = models.ForeignKey(Question, on_delete=models.CASCADE)
 
+    answer =models.CharField(max_length=200,null=True)
+    definition = models.TextField(null=True)
+    question_id = models.ForeignKey(Question, on_delete=models.CASCADE)
 # add playes
