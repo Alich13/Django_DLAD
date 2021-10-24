@@ -1,4 +1,5 @@
 from django.db import models
+import random
 
 # Create your models here.
 
@@ -21,10 +22,21 @@ class Question(models.Model):
     nb_answers = models.IntegerField(null=False)
     #images = models.ManyToManyField(Images, related_name='question', blank=True)
 
+    def __str__(self):
+        return str(self.question)
+
+
+    def get_answers(self):
+         return self.answer_list_set.all()
+
 
 class Answer_list (models.Model):
 
     answer =models.CharField(max_length=200,null=True)
     definition = models.TextField(null=True)
     question_id = models.ForeignKey(Question, on_delete=models.CASCADE)
-# add playes
+
+    def __str__(self):
+        return f"question: {self.question_id.question }," \
+               f" answer: {self.answer},"
+

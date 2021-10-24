@@ -64,8 +64,9 @@ def index(request):
 
 
 def home(request):
+    object_list = Question.objects.all()
     return render(request=request,
-                  template_name='learn/home.html')
+                  template_name='learn/home.html',context={"object_list":object_list})
 
 
 # @login_required(login_url='/')
