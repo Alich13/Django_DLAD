@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
+import json
 import random
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Q
@@ -14,31 +15,44 @@ def quiz_page(request,pk):
 
 def quiz_data_view(request,pk):
 
-    questions_dict = []
+    questions_dict = {}
     question =[Question.objects.get(pk=pk)] #
     questions_list = random.choices(question, k=5)
 
-
-    for q in questions_list:
+    for i,q in enumerate(questions_list):
         answers = []
         for a in q.get_answers():
             answers.append(a.answer)
 
         type = q.type
-        answers=random.choices(answers,k=q.nb_answers)
+        answers=answers[:q.nb_answers]
         correct_answer=random.choices(answers, k=1)[0] #on choisi une reponse au hazard
-        print(correct_answer)
+
         if type=="microscopy":
             images= Images.objects.filter(microscopy=correct_answer)[:q.nb_images]
         elif type=="component":
             images =Images.objects.filter(component=correct_answer)[:q.nb_images]
 
         images= [ image.name for image in images ]
-        print (images)
-        res =[answers,images,correct_answer]
-        questions_dict.append({str(q):res})
+
+        res =[str(q),answers,images,correct_answer]
+
+        questions_dict[str(i)]=res
+    print(questions_dict)
+
 
     return JsonResponse({
         'data': questions_dict,
-        'time': 15,
+
     })
+
+
+def save_quiz_view(request, pk):
+    if request.is_ajax():
+        questions = []
+        data = request.POST
+        data_ = dict(data.lists())
+        data_.pop('csrfmiddlewaretoken')
+        print(data_)
+
+    return JsonResponse({'passed': False})

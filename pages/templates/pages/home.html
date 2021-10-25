@@ -1,8 +1,8 @@
-{% extends 'learn/base.html' %}
+{% extends 'pages/base.html' %}
 {% load static %}
 
 {% block scripts %}
-    <script src="{% static 'learn/js/home.js' %}" defer></script>
+    <script src="{% static 'pages/js/home.js' %}" defer></script>
 {% endblock %}
 
 <!-- Navigation -->
@@ -76,6 +76,7 @@
         data-target="#quizStartModal">
         <h2>{{obj.type}}</h2>
     </button><br>
+<p>{{obj.question}}</p>
 {% endfor %}
 
 {% endblock %}
