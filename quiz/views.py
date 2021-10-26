@@ -1,12 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
-import json
-import random
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.db.models import Q
-
 from learn.models import *
-from django.contrib import messages
 
 def quiz_page(request,pk):
     object_list=Question.objects.get(pk=pk)
@@ -23,27 +17,30 @@ def quiz_data_view(request,pk):
         answers = []
         for a in q.get_answers():
             answers.append(a.answer)
-
-        type = q.type
+        random.shuffle(answers)
         answers=answers[:q.nb_answers]
         correct_answer=random.choices(answers, k=1)[0] #on choisi une reponse au hazard
 
-        if type=="microscopy":
-            images= Images.objects.filter(microscopy=correct_answer)[:q.nb_images]
-        elif type=="component":
+        type_ = q.type
+        if type_=="microscopy":
+            images= Images.objects.filter(microscopy=correct_answer)
+        elif type_=="component":
             images =Images.objects.filter(component=correct_answer)[:q.nb_images]
 
-        images= [ image.name for image in images ]
 
-        res =[str(q),answers,images,correct_answer]
+        images= [ image.name for image in images ]
+        random.shuffle(images)
+        images = images[:q.nb_images]
+        correct_answer_object= Answer_list.objects.get(answer=correct_answer)
+        correct_answer_description=correct_answer_object.definition
+        res =[str(q),answers,images,correct_answer,correct_answer_description]
 
         questions_dict[str(i)]=res
-    print(questions_dict)
+
 
 
     return JsonResponse({
         'data': questions_dict,
-
     })
 
 
@@ -53,6 +50,14 @@ def save_quiz_view(request, pk):
         data = request.POST
         data_ = dict(data.lists())
         data_.pop('csrfmiddlewaretoken')
-        print(data_)
+        """
+        returned a dicts with weird key but parsble 
+        
+        """
+        print(data_.keys())
+        print(data_['0[]'])
+        print(data_['4[]'])
+        # // calculate scores, store
+        # scores, users in models in viewresult
 
-    return JsonResponse({'passed': False})
+        return JsonResponse({'passed': "yes"})

@@ -22,11 +22,14 @@
 
 {% block content %}
 
-<a href="{% url 'home' %}" class="btn btn-danger">go back</a>
-
-<form id="quiz-form" class="mt-3 mb-3">
+<a href="{% url 'home' %}" class="btn btn-danger">Quit</a>
+<button id="submit" type="submit" class="btn btn-primary mt-3">Save</button>
+<form  id="quiz-form" class="mt-3 mb-3">
     {% csrf_token %}
-    <div id="quiz-box"></div>
+    <div id="quiz-box" style="margin-bottom: 10px;"></div>
 </form>
-    <button id="submit">Save</button>
+
+
+
+
 {% endblock %}
