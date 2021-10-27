@@ -4,6 +4,7 @@ const scoreBox = document.getElementById('score-box')
 const resultBox = document.getElementById('result-box')
 const timerBox = document.getElementById('timer-box')
 const quizForm = document.getElementById('quiz-form')
+const submit_button = document.getElementById("submit")
 const csrf = document.getElementsByName('csrfmiddlewaretoken')
 
 var all_questions ;
@@ -88,8 +89,39 @@ function send_to_result_page()
             url: `${url}save/`,
             data: all_questions,
             success: function(response){
-                const results = response.results
-                console.log(results);
+                    const results = response.results
+                    console.log(results)
+                    quizForm.classList.add("hidden")
+                    submit_button.classList.add("hidden")
+                    scoreBox.innerHTML = `${response.passed ? 'Congratulations! ' : 'Ups..:( '} ${response.user} , Your score is ${response.score}%`//.toFixed(2)
+
+                    results.forEach(res=>{
+                        const resDiv = document.createElement("div")
+                        for (const [question, resp] of Object.entries(res)){
+                            resDiv.innerHTML += question
+                            const cls = ['container', 'p-3', 'text-light', 'h6']
+                            resDiv.classList.add(...cls)
+
+                            if (resp=='not answered') {
+                                resDiv.innerHTML += '- not answered'
+                                resDiv.classList.add('bg-danger')
+                            }
+                            else {
+                                const answer = resp['answered']
+                                const correct = resp['correct_answer']
+
+                                if (answer == correct) {
+                                    resDiv.classList.add('bg-success')
+                                    resDiv.innerHTML += ` answered: ${answer}`
+                                } else {
+                                    resDiv.classList.add('bg-danger')
+                                    resDiv.innerHTML += ` | correct answer: ${correct}`
+                                    resDiv.innerHTML += ` | answered: ${answer}`
+                                }
+                            }
+                        }
+                        resultBox.append(resDiv)
+                    })
                 },
 
             error: function(error){
@@ -142,6 +174,7 @@ document.getElementById("submit").addEventListener('click',function()
         all_questions['csrfmiddlewaretoken'] = csrf[0].value
         console.log(all_questions);
         send_to_result_page(all_questions)
+        //window.location.href = url+ "results"
         //save final response and redirect to results
         // send Json to python view
         //redirect to final page
@@ -150,17 +183,5 @@ document.getElementById("submit").addEventListener('click',function()
     
     //send data
 });
-
-
-
-
-
-
-
-
-
-
-
-
 
 

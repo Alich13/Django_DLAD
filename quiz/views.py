@@ -1,6 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.http import JsonResponse
 from learn.models import *
+from datetime import datetime
 
 def quiz_page(request,pk):
     object_list=Question.objects.get(pk=pk)
@@ -44,20 +45,41 @@ def quiz_data_view(request,pk):
     })
 
 
-def save_quiz_view(request, pk):
-    if request.is_ajax():
-        questions = []
+def res_view(request,pk):
+    data=[]
+    if request.is_ajax() and request.method == 'POST' :
         data = request.POST
+        user = request.user
+
         data_ = dict(data.lists())
         data_.pop('csrfmiddlewaretoken')
-        """
-        returned a dicts with weird key but parsble 
-        
-        """
         print(data_.keys())
-        print(data_['0[]'])
-        print(data_['4[]'])
-        # // calculate scores, store
-        # scores, users in models in viewresult
 
-        return JsonResponse({'passed': "yes"})
+
+        """
+         returned a dicts with weird key but parsble
+         must parse here dict
+         get question q,images,answer,correct_answer,**description to be ploted ** and append it to the list results 
+         calcuulate score
+        """
+
+
+
+        """# save data in database
+        # to use it afterward to in summary_history view
+        # # # scores, users in models in viewresult
+        """
+        user_record = Historique( user=user, score=10,quiz=1)
+        user_record.save()
+
+
+        #our result must have this shape
+        results =[
+            {1:{"question":1,"answered":1,"correct_answer":1,"images":["1","2","3"]}},
+            {2:{"question":2,"answered":1,"correct_answer":2,"images":["1","4","3"]}}
+        ]
+
+
+        return JsonResponse({"user":user.username,"passed":True,"score":"to calculate","results":results})
+
+

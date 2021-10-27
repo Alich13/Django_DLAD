@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 import random
 
 # Create your models here.
@@ -40,3 +41,12 @@ class Answer_list (models.Model):
         return f"question: {self.question_id.question }," \
                f" answer: {self.answer},"
 
+
+
+class Historique (models.Model) :
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    score = models.IntegerField(null=True)
+    quiz =  models.IntegerField(null=False)
+    Date = models.DateTimeField(auto_now=True, auto_now_add=False)
+    time = models.TimeField(auto_now=True, auto_now_add=False)
