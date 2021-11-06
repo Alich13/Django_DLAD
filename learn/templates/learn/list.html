@@ -21,6 +21,7 @@
 <div>
     <h1><strong>{{results_found}}</strong> items found </h1>
 </div>
+
     {% for image in images %}
         {% with "learn/img/items/"|add:image.name|add:".jpg" as image_url %}
         <div class="col-sm-4 text-center">
@@ -35,6 +36,8 @@
         {% endwith %}
         {% if forloop.counter|divisibleby:3 %}<div class="clearfix"></div>{% endif %}
     {% endfor %}
+
+
 
 {% endif %}
 

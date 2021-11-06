@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from .models import *
-
 
 def My_paginetor(request, items, nb_items_in_page):
     paginator = Paginator(items, nb_items_in_page)
@@ -18,7 +18,7 @@ def My_paginetor(request, items, nb_items_in_page):
 
 
 
-# @login_required(login_url='/')
+@login_required
 def All_resources(request):
     images = Images.objects.all()
     results_found = str(len(images))
@@ -34,6 +34,8 @@ def All_resources(request):
 
 
 #
+
+@login_required
 def detail(request, image_id):
     image = Images.objects.get(id=image_id)  # primary key = album_id(qui vient de l'url)
 
@@ -46,6 +48,7 @@ def detail(request, image_id):
                   context=context)
 
 
+@login_required
 def search(request):
     query = request.GET.get('query')
     if not query:

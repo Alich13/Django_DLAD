@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
 from learn.models import *
 from .forms import NewUserForm
 from django.contrib.auth import login, authenticate, logout
@@ -11,7 +12,7 @@ def index(request):
     return render(request=request,
                   template_name='pages/index.html')
 
-
+@login_required
 def home(request):
     object_list = Question.objects.all()
     return render(request=request,

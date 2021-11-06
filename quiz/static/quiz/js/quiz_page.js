@@ -1,8 +1,9 @@
 const url = window.location.href;
+const myBox = document.getElementById('box')
 const quizBox = document.getElementById('quiz-box')
 const scoreBox = document.getElementById('score-box')
 const resultBox = document.getElementById('result-box')
-const timerBox = document.getElementById('timer-box')
+const imgBox = document.getElementById("image-quiz-box")
 const quizForm = document.getElementById('quiz-form')
 const submit_button = document.getElementById("submit")
 const csrf = document.getElementsByName('csrfmiddlewaretoken')
@@ -20,15 +21,19 @@ function diplay_quiz(data,question_id)
     const correct = data_tuple[3];
     const description = data_tuple[4];
 
+
     quizBox.innerHTML =
      `
-        <hr>
-        <div class="mb-2">
-            <b>${question_id} / ${question}</b>
+
+        <div class="mb-2" >
+            <hr>
+            <b> Question ${question_id + 1} :  ${question} </b>
+            <hr>
         </div>
+
     `
     answers.forEach(answer=>{
-        quizBox.innerHTML += 
+        quizBox.innerHTML +=
         
         `
             <div>
@@ -38,24 +43,30 @@ function diplay_quiz(data,question_id)
 
         `
     })
-
+    const imgDiv = document.createElement("div")
+    const cls = ["container-images-quiz","w3-panel" ,"w3-topbar", "w3-bottombar", "w3-border-red" ,"w3-pale-red"]
+    imgDiv.classList.add(...cls)
     images.forEach(image=>{
-        quizBox.innerHTML +=
 
+        imgDiv.innerHTML +=
         `
             <div class="col-sm-4 text-center">
-                <img src="/static/learn/img/items/${image}.jpg" id="${question_id}" alt="${image}" class="img-responsive">
+                <img src="/static/learn/img/items/${image[1]}.jpg"  class="img-responsive">
             </div>
 
         `
     })
-    quizBox.innerHTML +=
-    `
-    <div >
-        <p style="color:red;">${correct}</p>
-        <p>${description}</p>
-    </div>
-    `
+    imgDiv.innerHTML +=``
+    quizBox.append(imgDiv);
+
+
+//    quizBox.innerHTML +=
+//    `
+//    <div >
+//        <p style="color:red;">${correct}</p>
+//        <p>${description}</p>
+//    </div>
+//    `
 };
 
 
@@ -87,40 +98,100 @@ function send_to_result_page()
             
             type: 'POST',
             url: `${url}save/`,
-            data: all_questions,
+            dataType: 'json',
+            data:  { 'all_questions' : JSON.stringify(all_questions) , 'csrfmiddlewaretoken' : csrf[0].value} ,
             success: function(response){
                     const results = response.results
                     console.log(results)
                     quizForm.classList.add("hidden")
                     submit_button.classList.add("hidden")
+
                     scoreBox.innerHTML = `${response.passed ? 'Congratulations! ' : 'Ups..:( '} ${response.user} , Your score is ${response.score}%`//.toFixed(2)
 
                     results.forEach(res=>{
-                        const resDiv = document.createElement("div")
-                        for (const [question, resp] of Object.entries(res)){
-                            resDiv.innerHTML += question
-                            const cls = ['container', 'p-3', 'text-light', 'h6']
-                            resDiv.classList.add(...cls)
 
-                            if (resp=='not answered') {
+                        const resDiv = document.createElement("div")
+                        const imgDiv = document.createElement("div")
+
+                        for (const [question, resp] of Object.entries(res)){
+                            var answer = resp['answered']
+                            var correct = resp['correct_answer']
+                            var description = resp['description']
+                            var images = resp['images']
+
+                            resDiv.innerHTML +=  ` <b>Question ${question}</b> : <br>`
+                            const cls = ['container-images', 'text-light', 'h5']
+                            resDiv.classList.add(...cls)
+                            resDiv.setAttribute("id","res-container")
+
+
+                            const cls2 = ["container-images-results"]
+                            imgDiv.classList.add(...cls2)
+
+
+                            if (resp['answered']==null) {
                                 resDiv.innerHTML += '- not answered'
+                                resDiv.innerHTML += ` Correct answer: ${correct} <br>`
+                                resDiv.innerHTML += ` <u>Description:</u>  ${description} <br>`
                                 resDiv.classList.add('bg-danger')
+
+                                images.forEach(image=>{
+                                    imgDiv.innerHTML +=
+                                    `
+                                        <div class="col-sm-4 text-center">
+                                        <a href="/learn/${image[0]}">
+                                            <img src="/static/learn/img/items/${image[1]}.jpg" id="${question}" alt="${image}" class="img-responsive">
+                                        </a>
+                                        </div>
+
+                                    `
+                                })
+
                             }
                             else {
-                                const answer = resp['answered']
-                                const correct = resp['correct_answer']
+
 
                                 if (answer == correct) {
                                     resDiv.classList.add('bg-success')
-                                    resDiv.innerHTML += ` answered: ${answer}`
+                                    resDiv.innerHTML += ` Answered: ${answer} <br>`
+                                    resDiv.innerHTML += ` <u>Description:</u>  ${description} <br>`
+                                    images.forEach(image=>{
+                                    imgDiv.innerHTML +=
+                                    `
+                                        <div class="col-sm-4 text-center">
+                                            <a href="/learn/${image[0]}">
+                                            <img src="/static/learn/img/items/${image[1]}.jpg" id="${question}" alt="${image}" class="img-responsive">
+                                        </a>
+                                        </div>
+
+                                    `
+                                })
+
                                 } else {
                                     resDiv.classList.add('bg-danger')
-                                    resDiv.innerHTML += ` | correct answer: ${correct}`
-                                    resDiv.innerHTML += ` | answered: ${answer}`
+                                    resDiv.innerHTML += ` Correct answer: ${correct} <br>`
+                                    resDiv.innerHTML += ` Answered: ${answer} <br>`
+                                    resDiv.innerHTML += ` <u>Description:</u>  ${description} <br>`
+                                    images.forEach(image=>{
+                                    imgDiv.innerHTML +=
+                                    `
+                                        <div class="col-sm-4 text-center">
+                                            <a href="/learn/${image[0]}">
+                                            <img src="/static/learn/img/items/${image[1]}.jpg" id="${question}" alt="${image}" class="img-responsive">
+                                        </a>
+                                        </div>
+
+                                    `
+                                })
                                 }
                             }
                         }
+                        imgDiv.innerHTML += ` <hr> `
+                        resDiv.append(imgDiv)
                         resultBox.append(resDiv)
+
+
+
                     })
                 },
 
@@ -130,10 +201,6 @@ function send_to_result_page()
 
          })
 }
-
-
-
-
 
 
 $.ajax({
@@ -171,7 +238,6 @@ document.getElementById("submit").addEventListener('click',function()
 
     else if ( question_id==len-1 ){
         save(question_id);
-        all_questions['csrfmiddlewaretoken'] = csrf[0].value
         console.log(all_questions);
         send_to_result_page(all_questions)
         //window.location.href = url+ "results"

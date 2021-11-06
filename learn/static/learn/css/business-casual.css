@@ -16,6 +16,83 @@ body {
     -o-background-size: cover;
 }
 
+#learn-caroussel
+{
+background: url('../img/wall.jpg') ;
+
+}
+
+
+
+#learn-border {
+  box-shadow: 0 0 0 2rem skyblue;
+  border-radius: 12px;
+  font: bold 1rem sans-serif;
+  margin: 2rem;
+  padding: 1rem;
+  outline-offset: 0.5rem;
+}
+
+#res-container{
+    width: auto;
+    height: auto;
+    display: inline-block;
+    padding: 10px;
+}
+
+.container-images {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.img-responsive {
+    width: 90%;
+    height: 90%;
+}
+
+.img-learn {
+    height:200px
+    width: auto;
+    max-height: 200px;
+}
+
+
+.container-images-results {
+    padding-top: 20px;
+    margin-top: 10px;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    justify-content: space-between;
+}
+.container-images-learn {
+    padding-top: 20px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    justify-content: space-between;
+}
+
+.container-images-quiz {
+
+    padding-top: 20px;
+    margin-top: 10px;
+    border: 1px solid 	#4682B4;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    justify-content: space-between;
+}
+
+
+
 .corner {
     position:absolute;
     top:10px;

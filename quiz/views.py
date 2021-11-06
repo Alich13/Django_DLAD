@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from learn.models import *
+from django.contrib.auth.decorators import login_required
+import json
 from datetime import datetime
 
 def quiz_page(request,pk):
@@ -8,6 +10,7 @@ def quiz_page(request,pk):
     return render(request=request,
                   template_name='quiz/quiz_page.html',context={"obj_list":object_list})
 
+@login_required
 def quiz_data_view(request,pk):
 
     questions_dict = {}
@@ -29,7 +32,7 @@ def quiz_data_view(request,pk):
             images =Images.objects.filter(component=correct_answer)[:q.nb_images]
 
 
-        images= [ image.name for image in images ]
+        images= [ [image.id ,image.name] for image in images ]
         random.shuffle(images)
         images = images[:q.nb_images]
         correct_answer_object= Answer_list.objects.get(answer=correct_answer)
@@ -37,6 +40,7 @@ def quiz_data_view(request,pk):
         res =[str(q),answers,images,correct_answer,correct_answer_description]
 
         questions_dict[str(i)]=res
+        print(images)
 
 
 
@@ -44,24 +48,31 @@ def quiz_data_view(request,pk):
         'data': questions_dict,
     })
 
-
+@login_required
 def res_view(request,pk):
     data=[]
     if request.is_ajax() and request.method == 'POST' :
         data = request.POST
         user = request.user
-
-        data_ = dict(data.lists())
-        data_.pop('csrfmiddlewaretoken')
-        print(data_.keys())
-
-
+        all_question_and_ans_str = data.dict()["all_questions"]
+        all_quest_ans_dict = json.loads(all_question_and_ans_str)
+        # {"question_id" : [question , [propositions ..] ,[images..] , correct_ans , description , the choice] }
         """
          returned a dicts with weird key but parsble
          must parse here dict
          get question q,images,answer,correct_answer,**description to be ploted ** and append it to the list results 
          calcuulate score
         """
+        results = []
+        for key, value in all_quest_ans_dict.items():
+            question_id =int(key)
+            question = value[0]
+            answered = value[5]
+            correct_ans =value[3]
+            images=value[2]
+            description = value[4]
+            results.append({question_id:{"question":question,"answered":answered,"correct_answer":correct_ans,"images":images,"description":description}})
+
 
 
 
@@ -74,10 +85,12 @@ def res_view(request,pk):
 
 
         #our result must have this shape
-        results =[
-            {1:{"question":1,"answered":1,"correct_answer":1,"images":["1","2","3"]}},
-            {2:{"question":2,"answered":1,"correct_answer":2,"images":["1","4","3"]}}
-        ]
+        # results =[
+        #     {1:{"question":1,"answered":1,"correct_answer":1,"images":["1","2","3"]}},
+        #     {2:{"question":2,"answered":1,"correct_answer":2,"images":["1","4","3"]}},
+        #     {3: {"question": 1, "answered": 1, "correct_answer": 1, "images": ["1", "2", "3"]}},
+        #     {4: {"question": 2, "answered": 1, "correct_answer": 2, "images": ["1", "4", "3"]}}
+        # ]
 
 
         return JsonResponse({"user":user.username,"passed":True,"score":"to calculate","results":results})
