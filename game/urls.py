@@ -30,6 +30,7 @@ urlpatterns = [
     path('quiz/', include('quiz.urls', namespace="quiz")),
     url(r'^admin/', admin.site.urls),
 
+
 ]
 
 

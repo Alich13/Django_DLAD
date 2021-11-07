@@ -3,6 +3,7 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from .models import *
+from django.http import JsonResponse
 
 def My_paginetor(request, items, nb_items_in_page):
     paginator = Paginator(items, nb_items_in_page)
@@ -72,3 +73,37 @@ def search(request):
         'paginate': True
     }
     return render(request, 'learn/search.html', context)
+
+#
+def autocomplete(request):
+    #print (request.GET("term"))
+
+    returned_terms = []
+    if 'term' in request.GET:
+        qs_microscopy=Images.objects.filter(
+            microscopy__icontains=request.GET.get('term')
+        )
+        qs_cellType = Images.objects.filter(
+            cell_type__icontains=request.GET.get('term')
+        )
+        qs_org = Images.objects.filter(
+            organism__icontains=request.GET.get('term')
+        )
+
+        returned_terms = []
+        for element in qs_microscopy:
+            returned_terms.append(element.microscopy )
+
+        for element in qs_cellType:
+            returned_terms.append(element.cell_type )
+
+        for element in qs_org:
+            returned_terms.append(element.organism)
+
+        returned_terms = list(dict.fromkeys(returned_terms)) #remove duplicates
+        print (returned_terms)
+
+
+    return JsonResponse(returned_terms,safe=False)
+
+    # return render(request,'pages/templates/pages/home.html')

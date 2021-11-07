@@ -84,13 +84,7 @@ def res_view(request,pk):
         user_record.save()
 
 
-        #our result must have this shape
-        # results =[
-        #     {1:{"question":1,"answered":1,"correct_answer":1,"images":["1","2","3"]}},
-        #     {2:{"question":2,"answered":1,"correct_answer":2,"images":["1","4","3"]}},
-        #     {3: {"question": 1, "answered": 1, "correct_answer": 1, "images": ["1", "2", "3"]}},
-        #     {4: {"question": 2, "answered": 1, "correct_answer": 2, "images": ["1", "4", "3"]}}
-        # ]
+
 
 
         return JsonResponse({"user":user.username,"passed":True,"score":"to calculate","results":results})

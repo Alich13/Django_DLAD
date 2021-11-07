@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+<div id="carousel-example-generic" class="container-home-caroussel carousel slide"  data-ride="carousel">
   <!-- Indicators -->
   <ol class="carousel-indicators">
     <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
@@ -12,12 +12,11 @@
   <!-- Wrapper for slides -->
   <div class="carousel-inner" role="listbox">
     <div class="item active">
-        <h3>JGDJKCSMDVHSMFVSÙOVFSVJ</h3>
-      <img  src="static/learn/img/items/808.jpg" alt="image_caroussel">
+      <img  class="caroussel-images" src="static/learn/img/items/45501.jpg" alt="image_caroussel">
       <div class="carousel-caption">
         <ul class="nav navbar-nav">
             <li>
-                <a href="{% url 'login' %}">START</a>
+                <a href="{% url 'login' %}" style="color:red;" >START GAME </a>
                 <h3>JGDJKCSMDVHSMFVSÙOVFSVJ</h3>
             </li>
         </ul>
@@ -25,13 +24,13 @@
       </div>
     </div>
     <div class="item">
-        <h3>JGDJKCSMDVHSMFVSÙOVFSVJ</h3>
-      <img  src="static/learn/img/items/810.jpg" alt="...">
+
+      <img  class="caroussel-images" src="static/learn/img/items/7606.jpg" alt="...">
       <div class="carousel-caption">
 
         <ul class="nav navbar-nav">
             <li>
-                <a href="{% url 'login' %}">Learn</a>
+                <a href="{% url 'login' %}" style="color:red;">Learn</a>
                 <h3>JGDJKCSMDVHSMFVSÙOVFSVJ</h3>
             </li>
         </ul>
@@ -51,4 +50,9 @@
     <span class="sr-only">Next</span>
   </a>
 </div>
+<script type="text/javascript">
+        document.getElementById("my_box").className = "my_box_trans";
+</script>
+
 {% endblock %}
+
