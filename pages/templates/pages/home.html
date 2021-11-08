@@ -67,8 +67,16 @@
 <div  class=" intro-text text-center">Quiz List</div>
 <hr>
 
-{% for obj in object_list %}
-    <button
+
+<div class="row">
+    {% for obj,img in object_list %}
+  <div class="col-md-4">
+    <div class="thumbnail">
+
+        <img src="/static/learn/img/items/{{img}}.jpg" alt="Lights" style="width:400px; max-height:200px;">
+        <div class="caption">
+
+            <button
         class="btn btn-link modal-button"
         data-pk="{{obj.pk}}"
         data-questions="5"
@@ -77,11 +85,15 @@
         data-toggle="modal"
         data-target="#quizStartModal">
         <h2>{{obj.type}}</h2>
-    </button><br>
-<p>{{obj.question}}</p>
-{% endfor %}
-
+        </button><br>
+        <p>{{obj.question}}</p>
+        </div>
+    </div>
+  </div>
+    {% endfor %}
 
 </div>
+
+
 
 {% endblock %}

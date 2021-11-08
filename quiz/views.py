@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from learn.models import *
 from django.contrib.auth.decorators import login_required
 import json
-from datetime import datetime
+
 
 def quiz_page(request,pk):
     object_list=Question.objects.get(pk=pk)
@@ -29,7 +29,7 @@ def quiz_data_view(request,pk):
         if type_=="microscopy":
             images= Images.objects.filter(microscopy=correct_answer)
         elif type_=="component":
-            images =Images.objects.filter(component=correct_answer)[:q.nb_images]
+            images =Images.objects.filter(component=correct_answer)
 
 
         images= [ [image.id ,image.name] for image in images ]

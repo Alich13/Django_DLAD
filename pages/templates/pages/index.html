@@ -11,32 +11,37 @@
 
   <!-- Wrapper for slides -->
   <div class="carousel-inner" role="listbox">
-    <div class="item active">
-      <img  class="caroussel-images" src="static/learn/img/items/45501.jpg" alt="image_caroussel">
-      <div class="carousel-caption">
+    <div class="item active caroussel_container ">
+      <img  class="caroussel-images" src="static/learn/img/items/41643.jpg" alt="image_caroussel">
+
+        <div class="carousel-caption center-pos ">
         <ul class="nav navbar-nav">
             <li>
-                <a href="{% url 'login' %}" style="color:red;" >START GAME </a>
-                <h3>JGDJKCSMDVHSMFVSÙOVFSVJ</h3>
+                <h3 style="color : white">JGDJKCSMDVHSMFVSÙOVFSVJ</h3>
+                 <a href="{% url 'home' %}" style="color:white;" > START GAME </a>
             </li>
         </ul>
 
       </div>
     </div>
-    <div class="item">
+
+    <div class="item caroussel_container">
 
       <img  class="caroussel-images" src="static/learn/img/items/7606.jpg" alt="...">
-      <div class="carousel-caption">
-
+      <div class="">
+          <div class="carousel-caption center-pos">
         <ul class="nav navbar-nav">
             <li>
-                <a href="{% url 'login' %}" style="color:red;">Learn</a>
-                <h3>JGDJKCSMDVHSMFVSÙOVFSVJ</h3>
+
+                <h3 style="color : black">JGDJKCSMDVHSMFVSÙOVFSVJ</h3>
+                <button id="learn_button" type="button" class="btn btn-primary btn-lg btn-block"> LEARN </button>
+<!--                <a href="{% url 'login' %}" style="color: red;">Learn</a>-->
             </li>
         </ul>
+          </div>
 
       </div>
-    </div>
+      </div>
     ...
   </div>
 
@@ -52,6 +57,9 @@
 </div>
 <script type="text/javascript">
         document.getElementById("my_box").className = "my_box_trans";
+        document.getElementById("learn_button").onclick = function () {
+        location.href = "/learn";
+    };
 </script>
 
 {% endblock %}

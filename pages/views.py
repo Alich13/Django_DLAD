@@ -15,8 +15,14 @@ def index(request):
 @login_required
 def home(request):
     object_list = Question.objects.all()
+    images =["11995","34611"]
+    object_list= [ (obj,images[i]) for i, obj in enumerate(object_list)]
+    print (object_list)
     return render(request=request,
-                  template_name='pages/home.html',context={"object_list":object_list})
+                  template_name='pages/home.html',
+                  context={
+                      "object_list":object_list,
+                        })
 
 def register_request(request):
     if request.method == "POST":
