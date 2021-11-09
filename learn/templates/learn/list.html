@@ -1,0 +1,60 @@
+{% load static %}
+
+
+<div class="col-lg-12">
+    <hr>
+    <h2 class="intro-text text-center">{{ list_title }}
+    </h2>
+    <hr class="detail-separator">
+</div>
+
+
+{% include 'learn/search_form.html' %}
+
+
+{% if images|length_is:"0" %}
+    <div class="text-center">
+      Palsambleu ! Nous n'avons trouvé aucun résultat à cette requête.
+    </div>
+
+{% else %}
+<div>
+    <h1><strong>{{results_found}}</strong> items found </h1>
+</div>
+
+    {% for image in images %}
+        {% with "learn/img/items/"|add:image.name|add:".jpg" as image_url %}
+        <div class="col-sm-4 text-center">
+            <div class="thumbnail">
+            <a href="{% url 'learn:detail' image_id=image.id %}">
+              <img src="{% static image_url %}" alt="{{ image.name }}" style="width:400px; max-height:200px;">
+            </a>
+            <h><a href="{% url 'learn:detail' image_id=image.id %}"><strong>Item :</strong> {{ image.name }}</a></h><br>
+            <h><strong>Microscopy :</strong> {{image.microscopy}}</h><br>
+            <h><strong>Organism :</strong> {{image.organism}}</h><br>
+            <a href="{% url 'learn:detail' image_id=image.id %}"> see full description</a>
+        </div>
+        </div>
+        {% endwith %}
+        {% if forloop.counter|divisibleby:3 %}<div class="clearfix"></div>{% endif %}
+    {% endfor %}
+
+
+
+{% endif %}
+
+
+{% if paginate %}
+  <div class="clearfix"></div>
+  <nav aria-label="">
+    <ul class="pager">
+      {% if images.has_previous %}
+          <li><a href="?page={{ images.previous_page_number }}">Précédent</a></li>
+      {% endif %}
+      {% if images.has_next %}
+          <li><a href="?page={{ images.next_page_number }}">Suivant</a></li>
+      {% endif %}
+    </ul>
+  </nav>
+{% endif %}
+

@@ -1,0 +1,99 @@
+{% extends 'pages/base.html' %}
+{% load static %}
+
+{% block scripts %}
+    <script src="{% static 'pages/js/home.js' %}" defer></script>
+{% endblock %}
+
+<!-- Navigation -->
+
+{% block content_0 %}
+
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Menu</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <!-- navbar-brand is hidden on larger screens, but visible when the menu is collapsed -->
+                <a class="navbar-brand" href="index.html">Le bateau pirate</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+
+                    <li>
+                        <a href="/learn">Learn & explore</a>
+                    </li>
+                    <li>
+                        <a href="#">Rules</a>
+                    </li>
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+{% endblock %}
+
+
+
+{% block content %}
+<!-- Modal -->
+<div class="modal fade" id="quizStartModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Start?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="modal-body-confirm"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">no</button>
+        <button type="button" id="start-button" class="btn btn-success">yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div  class=" intro-text text-center">Quiz List</div>
+<hr>
+
+
+<div class="row">
+    {% for obj,img in object_list %}
+  <div class="col-md-4">
+    <div class="thumbnail">
+
+        <img src="/static/learn/img/items/{{img}}.jpg" alt="Lights" style="width:400px; max-height:200px;">
+        <div class="caption">
+
+            <button
+        class="btn btn-link modal-button"
+        data-pk="{{obj.pk}}"
+        data-questions="5"
+        data-time="15 min "
+        data-pass = "70 %"
+        data-toggle="modal"
+        data-target="#quizStartModal">
+        <h2>{{obj.type}}</h2>
+        </button><br>
+        <p>{{obj.question}}</p>
+        </div>
+    </div>
+  </div>
+    {% endfor %}
+
+</div>
+
+
+
+{% endblock %}

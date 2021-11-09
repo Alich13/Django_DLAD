@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+      <meta charset="utf-8">
+      <title></title>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+      {% load static %}
+      <link rel="stylesheet" type="text/css" href="{% static 'learn/css/business-casual.css' %}" />
+      <!-- Fonts -->
+      <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+      <link href="https://fonts.googleapis.com/css?family=Josefin+Slab:100,300,400,600,700,100italic,300italic,400italic,600italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+      {% block scripts %}
+      {% endblock%}
+
+  </head>
+  <body>
+
+    <div class="corner">
+          {% if user.is_authenticated %}
+            <h style="color:red" >{{user.username}}</h><br>
+            <a  href="#">My account </a><br>
+            <a  href="/logout">Logout</a>
+          {% else %}
+            <a  href="/login">Login</a>
+          {% endif %}
+    </div>
+
+    <div class="corner_left"><a href="https://www.univ-amu.fr/">
+        <img id="AMU" src="/static/pages/img/AMU.png" alt="image_AMU">
+    </a></div>
+
+    <div class="brand"><a href="/">DLAD QUIZ</a> <br>
+    <img id="logo_" src="/static/pages/img/cell_micro.jpg" alt="image_AMU">
+    </div>
+    <div class="address-bar">Learn while playing </div>
+
+    {% block content_0 %}
+
+    {% endblock %}
+
+
+    <div class="container">
+      <div class="row">
+        <div id ="my_box" class="box">
+                {% block content %}
+
+
+                {% endblock %}
+        </div>
+      </div>
+    </div>
+
+    {% block content_2 %}
+
+    {% endblock %}
+
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <p>Copyright &copy; <a href="https://formations.univ-amu.fr/fr/master/5SBI/PRSBI5AB" target="_blank">DLAD Master Bioinfo 2021/2022 </a> </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+     <!-- jQuery -->
+
+
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    <script type="text/javascript">
+    $( function() {
+    $( "#searchForm" ).autocomplete({
+      source: '{% url 'learn:autocomplete' %}',
+      minLength: 2
+    });
+  } );
+  </script>
+
+
+  </body>
+</html>
