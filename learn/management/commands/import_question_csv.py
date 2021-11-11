@@ -1,6 +1,6 @@
 import csv
 from django.core.management.base import BaseCommand, CommandError
-from learn.models import Question, Images
+from learn.models import Quiz, Images
 
 class Command(BaseCommand):
 
@@ -8,13 +8,13 @@ class Command(BaseCommand):
         parser.add_argument('csv_file', nargs='+', type=str)
 
     def handle(self, *args, **options):
-        Question.objects.all().delete()
+        Quiz.objects.all().delete()
         for csv_file in options['csv_file']:
             dataReader = csv.reader(open(csv_file), delimiter=',', quotechar='"')
             header = next(dataReader)
             for row in dataReader:
 
-                q=Question(
+                q=Quiz(
                     pk = row[0],
                     question=row[1],
                     type = row[2],
@@ -30,5 +30,5 @@ class Command(BaseCommand):
 
 
                 self.stdout.write(
-                    'Created question {} {}'.format(Question.type, Question.question)
+                    'Created question {} {}'.format(Quiz.type, Quiz.question)
                 )

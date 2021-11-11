@@ -24,6 +24,11 @@
 
 <a href="{% url 'home' %}" class="btn btn-danger">Quit</a>
 <button id="submit" type="submit" class="btn btn-primary mt-3">Save</button>
+
+<div>
+    <div class="col text-right" style="font-size: 2em;" id="timer-box"></div>
+</div>
+
 <form  id="quiz-form" class="mt-3 mb-3">
     {% csrf_token %}
     <div id="quiz-box" style="margin-bottom: 10px;"></div>

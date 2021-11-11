@@ -7,8 +7,53 @@ const imgBox = document.getElementById("image-quiz-box")
 const quizForm = document.getElementById('quiz-form')
 const submit_button = document.getElementById("submit")
 const csrf = document.getElementsByName('csrfmiddlewaretoken')
+const timerBox = document.getElementById('timer-box')
 
 var all_questions ,quiz_id ;
+
+const activateTimer = (time) => {
+    if (time.toString().length < 2) {
+        timerBox.innerHTML = `<b>0${time}:00</b>`
+    } else {
+        timerBox.innerHTML = `<b>${time}:00</b>`
+    }
+
+    let minutes = time - 1
+    let seconds = 60
+    let displaySeconds
+    let displayMinutes
+
+    const timer = setInterval(()=>{
+        seconds --
+        if (seconds < 0) {
+            seconds = 59
+            minutes --
+        }
+        if (minutes.toString().length < 2) {
+            displayMinutes = '0'+minutes
+        } else {
+            displayMinutes = minutes
+        }
+        if(seconds.toString().length < 2) {
+            displaySeconds = '0' + seconds
+        } else {
+            displaySeconds = seconds
+        }
+        if (minutes === 0 && seconds === 0) {
+            timerBox.innerHTML = "<b>00:00</b>"
+            setTimeout(()=>{
+                clearInterval(timer)
+                alert('Time over')
+
+            }, 500)
+        }
+
+        timerBox.innerHTML = `<b>${displayMinutes}:${displaySeconds}</b>`
+    }, 1000)
+}
+
+
+
 
 
 function diplay_quiz(data,question_id)
@@ -59,14 +104,6 @@ function diplay_quiz(data,question_id)
     imgDiv.innerHTML +=``
     quizBox.append(imgDiv);
 
-
-//    quizBox.innerHTML +=
-//    `
-//    <div >
-//        <p style="color:red;">${correct}</p>
-//        <p>${description}</p>
-//    </div>
-//    `
 };
 
 
@@ -104,6 +141,7 @@ function send_to_result_page()
                     const results = response.results
                     console.log(results)
                     quizForm.classList.add("hidden")
+                    timerBox.remove()
                     submit_button.classList.add("hidden")
 
                     scoreBox.innerHTML = `${response.passed ? 'Congratulations! ' : 'Ups..:( '} ${response.user} , Your score is ${response.score}%`//.toFixed(2)
@@ -222,6 +260,7 @@ $.ajax({
 // after loding the question
 
 diplay_quiz(all_questions,0);
+activateTimer(5)
 let len = Object.keys(all_questions).length;
 console.log(len)
 var question_id=0 ;
@@ -240,10 +279,6 @@ document.getElementById("submit").addEventListener('click',function()
         save(question_id);
         console.log(all_questions);
         send_to_result_page(all_questions)
-        //window.location.href = url+ "results"
-        //save final response and redirect to results
-        // send Json to python view
-        //redirect to final page
 
     }
     

@@ -1,0 +1,52 @@
+{% extends 'pages/base.html' %}
+{% load static %}
+
+
+
+<!-- Navigation -->
+
+{% block content_0 %}
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container">
+
+            <h3> STATS</h3>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+{% endblock %}
+
+
+
+{% block content %}
+
+<table id="stat_table" class="table table-striped table-bordered" style="width:100%">>
+    <thead>
+        <tr>
+            <th>User</th>
+            <th>Quiz</th>
+            <th>Score</th>
+            <th>Date</th>
+            <th>Time</th>
+
+        </tr>
+    </thead>
+
+    <tbody>
+    {% for stat in stats  %}
+        <tr>
+
+            <td>{{stat.user.user_name}}</td>
+            <td>{{stat.quiz}}</td>
+             <td>{{stat.score}}</td>
+            <td>{{stat.Date}}</td>
+            <td>{{stat.time}}</td>
+
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+
+
+{% endblock %}

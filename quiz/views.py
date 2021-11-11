@@ -3,10 +3,10 @@ from django.http import JsonResponse
 from learn.models import *
 from django.contrib.auth.decorators import login_required
 import json
-
+from django.db.models import F
 
 def quiz_page(request,pk):
-    object_list=Question.objects.get(pk=pk)
+    object_list=Quiz.objects.get(pk=pk)
     return render(request=request,
                   template_name='quiz/quiz_page.html',context={"obj_list":object_list})
 
@@ -14,7 +14,7 @@ def quiz_page(request,pk):
 def quiz_data_view(request,pk):
 
     questions_dict = {}
-    question =[Question.objects.get(pk=pk)] #
+    question =[Quiz.objects.get(pk=pk)] #
     questions_list = random.choices(question, k=5) #number of questions per quiz
 
     for i,q in enumerate(questions_list):
@@ -49,24 +49,29 @@ def quiz_data_view(request,pk):
 
     return JsonResponse({
         'data': questions_dict,
-        'quiz_id':pk
+        'quiz_id':pk,
+        'time': 5
     })
+
+
+
+
+
 
 @login_required
 def res_view(request,pk):
+    """
+    saves quiz questions and answers in database
+    and return a json response to display results with JS
+    """
     data=[]
     if request.is_ajax() and request.method == 'POST' :
         data = request.POST
         user = request.user
         all_question_and_ans_str = data.dict()["all_questions"]
         all_quest_ans_dict = json.loads(all_question_and_ans_str)
-        """
-         returned a dicts with weird key but parsble
-         must parse here dict
-         get question q,images,answer,correct_answer,**description to be ploted ** and append it to the list results 
-         calcuulate score
-        """
         results = []
+        score = 0
         for key, value in all_quest_ans_dict.items():
             question_id =int(key)+1
             question = value[0]
@@ -75,19 +80,18 @@ def res_view(request,pk):
             images=value[2]
             description = value[4]
             results.append({question_id:{"question":question,"answered":answered,"correct_answer":correct_ans,"images":images,"description":description}})
-
-
-        """# save data in database
-        # to use it afterward to in summary_history view
-        # # # scores, users in models in viewresult
-        """
+            if answered==correct_ans :
+                score+=1
+        score=(score/len(all_quest_ans_dict.keys()))*100
 
         quiz_id=int(data.dict()["quiz_id"]) # or question_id
-        question_id=Question.objects.get(pk=quiz_id)
-        p= profile.objects.get(user=user)
-        user_record = stats( user=p, score=10, quiz=question_id)
+        quiz=Quiz.objects.get(pk=quiz_id)
+        print(quiz.points)
+        if score > 70:
+            Profile.objects.filter(user=user).update(Total_points=F('Total_points')+quiz.points)
+        user_record = Stat( user=Profile.objects.get(user=user), score=score, quiz=quiz)
         user_record.save()
 
-        return JsonResponse({"user":user.username,"passed":True,"score":"to calculate","results":results})
+        return JsonResponse({"user":user.username,"passed":True,"score":score,"results":results})
 
 

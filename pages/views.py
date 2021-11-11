@@ -14,10 +14,10 @@ def index(request):
 
 @login_required
 def home(request):
-    object_list = Question.objects.all()
+    object_list = Quiz.objects.all()
     images =["11995","34611","228","39049"]
     object_list= [ (obj,images[i]) for i, obj in enumerate(object_list)]
-    print (object_list)
+
     return render(request=request,
                   template_name='pages/home.html',
                   context={
@@ -61,3 +61,11 @@ def logout_request(request):
     messages.info(request, "You have successfully logged out.")
     return redirect("login")
 
+def stats(request):
+    stats = Stat.objects.all()
+
+    return render(request=request,
+                  template_name='pages/stat_page.html',
+                  context={
+                      "stats": stats,
+                        })
