@@ -8,7 +8,7 @@ const quizForm = document.getElementById('quiz-form')
 const submit_button = document.getElementById("submit")
 const csrf = document.getElementsByName('csrfmiddlewaretoken')
 
-var all_questions ;
+var all_questions ,quiz_id ;
 
 
 function diplay_quiz(data,question_id)
@@ -99,7 +99,7 @@ function send_to_result_page()
             type: 'POST',
             url: `${url}save/`,
             dataType: 'json',
-            data:  { 'all_questions' : JSON.stringify(all_questions) , 'csrfmiddlewaretoken' : csrf[0].value} ,
+            data:  { 'all_questions' : JSON.stringify(all_questions) , 'csrfmiddlewaretoken' : csrf[0].value  ,'quiz_id':quiz_id} ,
             success: function(response){
                     const results = response.results
                     console.log(results)
@@ -209,8 +209,8 @@ $.ajax({
     async: false,
     success: function(data)
     {
-        all_questions = data;
-        all_questions =all_questions["data"];
+        all_questions =data["data"];
+        quiz_id=data["quiz_id"]
     },
 
     error: function(error){

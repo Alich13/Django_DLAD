@@ -1,0 +1,5 @@
+questionid,question,type,imagefield,point,n_answer,n_image,time
+1,Which kind of microscopy was used to take the following images ?,microscopy,mode,1,4,3,5
+2,Which feature is common between the images ?,component,component,3,4,2,5
+3,what is the organism shown in these images ?,organism,organism,2,4,3,5
+4,which kind of celltype we are visualizing here ? ,celltype,celltype,2,4,3,5

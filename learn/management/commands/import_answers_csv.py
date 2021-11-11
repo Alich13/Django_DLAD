@@ -8,6 +8,7 @@ class Command(BaseCommand):
         parser.add_argument('csv_file', nargs='+', type=str)
 
     def handle(self, *args, **options):
+        Answer_list.objects.all().delete()
         for csv_file in options['csv_file']:
             dataReader = csv.reader(open(csv_file), delimiter=',', quotechar='"')
             header = next(dataReader)

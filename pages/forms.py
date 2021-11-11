@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from learn.models import profile
 
 
 class NewUserForm(UserCreationForm):
@@ -8,11 +9,13 @@ class NewUserForm(UserCreationForm):
 
 	class Meta:
 		model = User
-		fields = ("username", "email", "password1", "password2")
+		fields = ("username", "email", "password1", "password2", "first_name", "last_name")
 
 	def save(self, commit=True):
 		user = super(NewUserForm, self).save(commit=False)
 		user.email = self.cleaned_data['email']
 		if commit:
 			user.save()
+			p = profile(user=user ,user_name=user.username)
+			p.save()
 		return user

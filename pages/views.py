@@ -15,7 +15,7 @@ def index(request):
 @login_required
 def home(request):
     object_list = Question.objects.all()
-    images =["11995","34611"]
+    images =["11995","34611","228","39049"]
     object_list= [ (obj,images[i]) for i, obj in enumerate(object_list)]
     print (object_list)
     return render(request=request,

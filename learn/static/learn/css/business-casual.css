@@ -131,6 +131,7 @@ font-size:8px;}
     padding-top: 0px;
     padding-bottom: 10px;
     margin-left: 20%;
+    margin-bottom: 10px;
     width: 60%;
 
 }
@@ -138,28 +139,34 @@ font-size:8px;}
 .caroussel_container {
     position:absolute;
     top : 0 ;
-    margin-left: 50px;
+    bottom :10 ;
+    margin-left:100px;
     width: 500px;
-    height: 500px;
+    height: 510px;
+    background:white;
 
+    border: solid red 5px;
+    border-radius: 10px ;
 
 }
 .caroussel-images {
     position:absolute;
     top : 0px;
-    left : 50px;
-    margin-top: 10px;
+    left : 0px;
+    margin-top: 0px;
+    margin-bottom: 10px;
     margin-left : 0px;
     margin-right : 500px;
     max-width: 500px;
     max-height: 500px;
-    border: 5px solid #555;
+
+
 }
 
 .center-pos
 {
     top : 150px;
-    left: 100px;
+    left: 70px;
 }
 
 h1,

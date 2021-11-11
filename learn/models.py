@@ -21,14 +21,17 @@ class Question(models.Model):
     points= models.IntegerField(null=False)
     nb_images = models.IntegerField(null=False) # the number of images to be displayed
     nb_answers = models.IntegerField(null=False)
-    #images = models.ManyToManyField(Images, related_name='question', blank=True)
+    time = models.IntegerField(null=True)
+    images = models.ManyToManyField(Images, related_name='question', blank=True)
 
     def __str__(self):
         return str(self.question)
 
-
     def get_answers(self):
          return self.answer_list_set.all()
+
+    # def get_images(self,type_,value):
+    #     return self.objects.filter(images__component=value)
 
 
 class Answer_list (models.Model):
@@ -43,10 +46,15 @@ class Answer_list (models.Model):
 
 
 
-class Historique (models.Model) :
+class profile (models.Model) :
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user_name = models.CharField(max_length=200, null=True)
+    profile_image = models.CharField(max_length=200,null=True)
+    Total_points = models.IntegerField(default=0)
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+class stats (models.Model) :
+    user = models.ForeignKey(profile, on_delete=models.CASCADE)
     score = models.IntegerField(null=True)
-    quiz =  models.IntegerField(null=False)
+    quiz =  models.ForeignKey(Question, on_delete=models.CASCADE) #id of the quiz
     Date = models.DateTimeField(auto_now=True, auto_now_add=False)
     time = models.TimeField(auto_now=True, auto_now_add=False)

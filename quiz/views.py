@@ -15,7 +15,7 @@ def quiz_data_view(request,pk):
 
     questions_dict = {}
     question =[Question.objects.get(pk=pk)] #
-    questions_list = random.choices(question, k=5)
+    questions_list = random.choices(question, k=5) #number of questions per quiz
 
     for i,q in enumerate(questions_list):
         answers = []
@@ -23,13 +23,20 @@ def quiz_data_view(request,pk):
             answers.append(a.answer)
         random.shuffle(answers)
         answers=answers[:q.nb_answers]
+
         correct_answer=random.choices(answers, k=1)[0] #on choisi une reponse au hazard
 
         type_ = q.type
+
+
         if type_=="microscopy":
-            images= Images.objects.filter(microscopy=correct_answer)
+            images= q.images.filter(microscopy=correct_answer)
         elif type_=="component":
-            images =Images.objects.filter(component=correct_answer)
+            images =q.images.filter(component=correct_answer)
+        elif type_=="organism":
+            images =q.images.filter(organism=correct_answer)
+        elif type_=="celltype":
+            images =q.images.filter(cell_type=correct_answer)
 
 
         images= [ [image.id ,image.name] for image in images ]
@@ -38,14 +45,11 @@ def quiz_data_view(request,pk):
         correct_answer_object= Answer_list.objects.get(answer=correct_answer)
         correct_answer_description=correct_answer_object.definition
         res =[str(q),answers,images,correct_answer,correct_answer_description]
-
         questions_dict[str(i)]=res
-        print(images)
-
-
 
     return JsonResponse({
         'data': questions_dict,
+        'quiz_id':pk
     })
 
 @login_required
@@ -56,7 +60,6 @@ def res_view(request,pk):
         user = request.user
         all_question_and_ans_str = data.dict()["all_questions"]
         all_quest_ans_dict = json.loads(all_question_and_ans_str)
-        # {"question_id" : [question , [propositions ..] ,[images..] , correct_ans , description , the choice] }
         """
          returned a dicts with weird key but parsble
          must parse here dict
@@ -65,7 +68,7 @@ def res_view(request,pk):
         """
         results = []
         for key, value in all_quest_ans_dict.items():
-            question_id =int(key)
+            question_id =int(key)+1
             question = value[0]
             answered = value[5]
             correct_ans =value[3]
@@ -74,18 +77,16 @@ def res_view(request,pk):
             results.append({question_id:{"question":question,"answered":answered,"correct_answer":correct_ans,"images":images,"description":description}})
 
 
-
-
         """# save data in database
         # to use it afterward to in summary_history view
         # # # scores, users in models in viewresult
         """
-        user_record = Historique( user=user, score=10,quiz=1)
+
+        quiz_id=int(data.dict()["quiz_id"]) # or question_id
+        question_id=Question.objects.get(pk=quiz_id)
+        p= profile.objects.get(user=user)
+        user_record = stats( user=p, score=10, quiz=question_id)
         user_record.save()
-
-
-
-
 
         return JsonResponse({"user":user.username,"passed":True,"score":"to calculate","results":results})
 
