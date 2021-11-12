@@ -70,7 +70,7 @@ function diplay_quiz(data,question_id)
     quizBox.innerHTML =
      `
 
-        <div class="mb-2" >
+        <div class="mb-2 text-center" style="font-size:1.5em;" >
             <hr>
             <b> Question ${question_id + 1} :  ${question} </b>
             <hr>

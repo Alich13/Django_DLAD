@@ -63,9 +63,16 @@ def logout_request(request):
 
 def stats(request):
     stats = Stat.objects.all()
-
+    profiles=Profile.objects.all()
+    print (profiles)
     return render(request=request,
                   template_name='pages/stat_page.html',
                   context={
                       "stats": stats,
+                      "profiles": profiles
                         })
+
+def test(request):
+
+    return render(request=request,
+                  template_name='pages/test.html')

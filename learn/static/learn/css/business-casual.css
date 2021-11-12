@@ -117,13 +117,14 @@ font-size:8px;}
 }
 #AMU {
 
-    max-width: 189px;
+    max-width: 300px;
     max-height: 189px;
 }
 #logo_ {
 
     max-width: 189px;
     max-height: 189px;
+    background: transparent  no-repeat center;
 }
 
 .container-home-caroussel {

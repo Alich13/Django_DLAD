@@ -30,6 +30,9 @@ urlpatterns = [
     url(r'^learn/', include('learn.urls', namespace="learn")), #les path de quiz/url.py préfixée par quiz/
     path('quiz/', include('quiz.urls', namespace="quiz")),
     url(r'^admin/', admin.site.urls),
+    url(r'^test$', views.test),
+
+
 
 
 ]
