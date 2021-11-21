@@ -83,8 +83,11 @@ TEMPLATES = [
 WSGI_APPLICATION = 'game.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
+#postgres://myhvnhvpkdclux:197b94900b32d16c9d13252906be5e8544b022c3ca60bc8096ab9ce4738ca5ad@ec2-52-0-196-50.compute-1.amazonaws.com:5432/d8fo1n0vmg4cs0
+
+"""
+postgre database for migrations
+"""
 
 DATABASES = {
     'default': {
@@ -97,11 +100,20 @@ DATABASES = {
     }
         }
 
-#postgres://myhvnhvpkdclux:197b94900b32d16c9d13252906be5e8544b022c3ca60bc8096ab9ce4738ca5ad@ec2-52-0-196-50.compute-1.amazonaws.com:5432/d8fo1n0vmg4cs0
+"""
+sqllite database for migrations
+
+"""
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+#         }
 
 
-# Password validation
-# https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
