@@ -1,6 +1,6 @@
 import csv
 from django.core.management.base import BaseCommand, CommandError
-from learn.models import Answer_list ,Question
+from learn.models import Answer_list ,Quiz
 
 class Command(BaseCommand):
 
@@ -16,7 +16,7 @@ class Command(BaseCommand):
                 print(row[0],row[1],row[2],row[3])
                 Answer_list.objects.create(
                     pk = row[0],
-                    question_id=Question.objects.get(pk=int(row[1])) ,
+                    question_id=Quiz.objects.get(pk=int(row[1])) ,
                     answer= row[2],
                     definition=row[3],
 
