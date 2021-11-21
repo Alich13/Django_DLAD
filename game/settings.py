@@ -29,7 +29,7 @@ SECRET_KEY = 'egfakakv8ema+v6u0!#ct8=6s&&^bi7dehzj)(tqxe-mo#@%3u'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-ALLOWED_HOSTS = ['127.0.0.1','0.0.0.0']
+ALLOWED_HOSTS = ['127.0.0.1','0.0.0.0','http://aliquizgame.herokuapp.com/']
 
 
 # Application definition
