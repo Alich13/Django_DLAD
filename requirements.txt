@@ -1,3 +1,5 @@
+asgiref==3.4.1
+pytz==2021.1
 backports.entry-points-selectable==1.1.0
 certifi==2021.5.30
 distlib==0.3.3
@@ -19,10 +21,9 @@ psycopg2==2.7.7
 psycopg2-binary==2.8.6
 pygraphviz==1.7
 python-dateutil==2.8.2
-pytz @ file:///tmp/build/80754af9/pytz_1612215392582/work
 six==1.16.0
-sqlparse @ file:///Users/ktietz/demo/mc3/conda-bld/sqlparse_1629301172578/work
-typing-extensions @ file:///Users/ktietz/demo/mc3/conda-bld/typing_extensions_1629887998905/work
+sqlparse=0.3.1
+typing-extensions==3.10.0.0
 virtualenv==20.8.1
 virtualenv-clone==0.5.7
 whitenoise==3.3.1
