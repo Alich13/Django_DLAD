@@ -77,20 +77,29 @@ function diplay_quiz(data,question_id)
         </div>
 
     `
+
     answers.forEach(answer=>{
         quizBox.innerHTML +=
         
         `
-            <div>
-                <input type="radio" class="ans" id="${question_id}" name="${question_id}" value="${answer}">
-                <label for="${question_id}">${answer}</label>
-            </div>
-
+                <div class="question bg-white p-3 border-bottom" >
+                    <div class="ans ml-2" >
+                        <label class="radio" >
+                            <input type="radio" class="ans" id="${question_id}" name="${question_id}" value="${answer}">
+                            <span>${answer}</span>
+                        </label>
+                    </div>
+                </div>
         `
     })
+
+
+
+
     const imgDiv = document.createElement("div")
     const cls = ["container-images-quiz","w3-panel" ,"w3-topbar", "w3-bottombar", "w3-border-red" ,"w3-pale-red"]
     imgDiv.classList.add(...cls)
+
     images.forEach(image=>{
 
         imgDiv.innerHTML +=
