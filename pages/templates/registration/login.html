@@ -6,14 +6,21 @@
 
 <!--Login-->
  {% include 'learn/messages.html' %}
-<div class="container py-5">
-  <h1>Login</h1>
-  <form method="POST">
+<div class="container py-5" style="margin-left: 300px; padding:50px;">
+
+  <div style="width:400px" >
+    <h1>Login</h1>
+    <form method="POST">
     {% csrf_token %}
     {{ login_form|crispy }}
-    <button class="btn btn-primary" type="submit">Login</button>
+    <br>
+    <button class="btn btn-primary btn-lg" type="submit">Login</button><br>
+    <p>Don't have an account? <a href="register">Create an account</a>.</p>
   </form>
-  <p class="text-center">Don't have an account? <a href="register">Create an account</a>.</p>
+  </div>
+
+
+
 </div>
 
 {% endblock %}

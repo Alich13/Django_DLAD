@@ -148,12 +148,38 @@ function send_to_result_page()
             data:  { 'all_questions' : JSON.stringify(all_questions) , 'csrfmiddlewaretoken' : csrf[0].value  ,'quiz_id':quiz_id} ,
             success: function(response){
                     const results = response.results
-                    console.log(results)
+                    console.log(response)
                     quizForm.classList.add("hidden")
                     timerBox.remove()
                     submit_button.classList.add("hidden")
 
-                    scoreBox.innerHTML = `${response.passed ? 'Congratulations! ' : 'Ups..:( '} ${response.user} , Your score is ${response.score}%`//.toFixed(2)
+                    if (response.passed) {
+                           scoreBox.innerHTML =
+                    `
+
+                    <p style ="font-size:2em;margin-left:10px;">
+                    Congratulations! ${response.user} , Your score is ${response.score} . <br>
+                    Want to learn more , click <a href="/learn"> here </a> .
+                    <img  style="width:100px;height:100px;background:transparent" id="happy" src="/static/pages/img/happy.png" alt="happy">
+                    </p>
+
+                    `
+
+                        }
+                    else {
+                           scoreBox.innerHTML =
+                    `
+                    <p style ="font-size:2em;margin-left:10px;">
+                     Ooooooops.. ${response.user} , you did not pass the test , Your score is ${response.score} . <br>
+                      Want to learn more , click <a href="/learn"> here </a>
+                      <img  style="width:100px;height:100px;background:transparent" id="sorry" src="/static/pages/img/sorry.png" alt="sorry">
+                    </p>
+
+                    `
+                        }
+
+
+                    //
 
                     results.forEach(res=>{
 
@@ -166,7 +192,7 @@ function send_to_result_page()
                             var description = resp['description']
                             var images = resp['images']
 
-                            resDiv.innerHTML +=  ` <b>Question ${question}</b> : <br>`
+                            resDiv.innerHTML +=  ` <p style="font-size:2em;"><b>Question ${question}</b> : </p> <br>`
                             const cls = ['container-images', 'text-light', 'h5']
                             resDiv.classList.add(...cls)
                             resDiv.setAttribute("id","res-container")
@@ -177,9 +203,14 @@ function send_to_result_page()
 
 
                             if (resp['answered']==null) {
-                                resDiv.innerHTML += '- not answered'
-                                resDiv.innerHTML += ` Correct answer: ${correct} <br>`
-                                resDiv.innerHTML += ` <u>Description:</u>  ${description} <br>`
+                                resDiv.innerHTML +=
+                                `
+                                    <p>
+                                        Question not answered
+                                        <p style="color:green;"> Correct answer : ${correct} </p>
+                                        <p><b><u>Description :</u></b>  ${description} </p> <br>
+                                    </p>
+                                `
                                 resDiv.classList.add('bg-danger')
 
                                 images.forEach(image=>{
@@ -200,8 +231,13 @@ function send_to_result_page()
 
                                 if (answer == correct) {
                                     resDiv.classList.add('bg-success')
-                                    resDiv.innerHTML += ` Answered: ${answer} <br>`
-                                    resDiv.innerHTML += ` <u>Description:</u>  ${description} <br>`
+                                    resDiv.innerHTML +=
+                                    `
+                                       <p> Answered: ${answer} <br>
+                                           <p style="color:green;"> Correct answer : ${correct} </p>
+                                           <p><b><u>Description :</u></b>  ${description} </p> <br>
+                                       </p>
+                                    `
                                     images.forEach(image=>{
                                     imgDiv.innerHTML +=
                                     `
@@ -216,9 +252,13 @@ function send_to_result_page()
 
                                 } else {
                                     resDiv.classList.add('bg-danger')
-                                    resDiv.innerHTML += ` Correct answer: ${correct} <br>`
-                                    resDiv.innerHTML += ` Answered: ${answer} <br>`
-                                    resDiv.innerHTML += ` <u>Description:</u>  ${description} <br>`
+                                    resDiv.innerHTML +=
+                                    `
+                                       <p> Answered: ${answer} <br>
+                                            <p style="color:green;"> Correct answer : ${correct} </p>
+                                            <p><b><u>Description :</u></b>  ${description} </p> <br>
+                                       </p>
+                                    `
                                     images.forEach(image=>{
                                     imgDiv.innerHTML +=
                                     `

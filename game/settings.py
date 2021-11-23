@@ -151,3 +151,4 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 LOGIN_REDIRECT_URL ='learn:resources'
 LOGOUT_REDIRECT_URL ='login'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

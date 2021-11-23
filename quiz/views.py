@@ -83,15 +83,18 @@ def res_view(request,pk):
             if answered==correct_ans :
                 score+=1
         score=(score/len(all_quest_ans_dict.keys()))*100
-
         quiz_id=int(data.dict()["quiz_id"]) # or question_id
         quiz=Quiz.objects.get(pk=quiz_id)
         print(quiz.points)
         if score > 70:
             Profile.objects.filter(user=user).update(Total_points=F('Total_points')+quiz.points)
+            passed = True;
+        else :
+            passed =False;
+
         user_record = Stat( user=Profile.objects.get(user=user), score=score, quiz=quiz)
         user_record.save()
 
-        return JsonResponse({"user":user.username,"passed":True,"score":score,"results":results})
+        return JsonResponse({"user":user.username,"passed":passed,"score":score,"results":results})
 
 

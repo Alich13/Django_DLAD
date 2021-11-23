@@ -8,24 +8,18 @@
 <!-- Navigation -->
 
 {% block content_0 %}
-    <nav class="navbar navbar-default" role="navigation">
-        <div class="container">
 
-            <h3> Quiz Begins here</h3>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container -->
-    </nav>
 {% endblock %}
 
 
 
 {% block content %}
+<div style="padding:10px;">
+    <a href="{% url 'home' %}" class="btn btn-danger" style="width:150px;height:40px;">Quit</a>
+    <button id="submit" type="submit" class="btn btn-primary mt-3" style="width:150px;height:40px;">Save</button>
+</div>
 
-<a href="{% url 'home' %}" class="btn btn-danger">Quit</a>
-<button id="submit" type="submit" class="btn btn-primary mt-3">Save</button>
-
-<div>
+<div style="margin-right:20px;">
     <div class="col text-right" style="font-size: 2em;" id="timer-box"></div>
 </div>
 

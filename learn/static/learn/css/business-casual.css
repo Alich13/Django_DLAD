@@ -9,7 +9,9 @@
 
 body {
     font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
-    background: url('../img/items/2959.jpg') no-repeat center center fixed;
+
+    background:linear-gradient(to bottom,rgba(53, 58, 60, 0.95),rgba(123, 114, 119, 0.19)),
+    url('../img/items/240.jpg') no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -100,6 +102,7 @@ font-size:8px;}
 
 
 .container-images {
+    border: 2px solid 	#74C5ED;
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -142,7 +145,7 @@ font-size:8px;}
 
     padding-top: 20px;
     margin-top: 70px;
-    border: 5px solid 	#74C5ED;
+    border: 2px solid 	#74C5ED;
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -166,15 +169,31 @@ font-size:8px;}
     width: 189px;
     height: 189px;
 }
+
+.corner_left_2 {
+    position:absolute;
+    top:10px;
+    left:200px;
+    width: 189px;
+    height: 189px;
+}
+
 #AMU {
 
-    max-width: 300px;
-    max-height: 189px;
+    max-width: 400px;
+    max-height: 250px;
 }
 #logo_ {
 
-    max-width: 189px;
-    max-height: 189px;
+    max-width: 150px;
+    max-height: 80px;
+    background: transparent  no-repeat center;
+}
+
+#logo__ {
+
+    max-width: 200px;
+    max-height: 400px;
     background: transparent  no-repeat center;
 }
 

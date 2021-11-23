@@ -5,7 +5,7 @@ from learn.models import Profile
 
 
 class NewUserForm(UserCreationForm):
-	email = forms.EmailField(required=True)
+	email = forms.EmailField(required=True,widget=forms.TextInput(attrs={'placeholder': 'Email'}))
 
 	class Meta:
 		model = User
