@@ -3,12 +3,12 @@
 
 # Django DLAD Quiz
  
-##Description
+## Description
 This web application was developed as part of an academic project and is intended for educational purpose .
 
 We Believe that one can learn faster and more efficiently through playing ,thus we developed this web quiz. This platform offers the possibility to users to not only play the quiz game but also explore microscopic images and learn about them .
 
-##Requirements 
+## Requirements 
 
 All dependencies can be found in <code> ./requirements.txt </code> . otherwise, to make it simple you can just create a conda environment from  <code>./django_environment</code> .     
 
