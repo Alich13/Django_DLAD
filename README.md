@@ -17,7 +17,7 @@ All dependencies can be found in <code> ./requirements.txt </code> . otherwise, 
 
 
 ## Project organisation
-3 main django applications where ( learn,quiz and pages ) .
+Three main django applications where created ( learn,quiz and pages ) .
     
 
     ├── game   
