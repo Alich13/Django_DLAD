@@ -88,6 +88,17 @@ WSGI_APPLICATION = 'game.wsgi.application'
 """
 postgre database for migrations
 """
+#
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'd8fo1n0vmg4cs0',
+#         'HOST' : 'ec2-52-0-196-50.compute-1.amazonaws.com',
+#         'PORT' :'5432',
+#         'USER':'myhvnhvpkdclux',
+#         'PASSWORD':'197b94900b32d16c9d13252906be5e8544b022c3ca60bc8096ab9ce4738ca5ad'
+#     }
+#         }
 
 DATABASES = {
     'default': {
@@ -105,12 +116,12 @@ sqllite database for migrations
 
 """
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-#         }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+        }
 
 
 
